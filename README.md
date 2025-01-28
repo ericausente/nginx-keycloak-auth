@@ -63,10 +63,11 @@ Expected Response:
             "expires_in": 1800,
             "token_type": "Bearer"
         }
-
-    (Snapshots are stored in /snapshots/postman-token-response.png)
+        
+![keycloak-configuration](https://github.com/user-attachments/assets/fa559443-de15-4074-a4aa-a341ec2046dd)
 
 2. NGINX Configuration
+
 A. Load JavaScript Module
 
 Ensure the ngx_http_js_module is loaded. Add this to nginx.conf:
@@ -76,7 +77,7 @@ load_module modules/ngx_http_js_module.so;
 B. Add the NJS Script
 
 Save the following script as oauth_token.js under /etc/nginx/conf.d/:
-
+```
 function introspectAccessToken(r) {
     r.log("Starting introspection subrequest...");
     r.subrequest('/_oauth2_send_request', function(reply) {
@@ -111,11 +112,13 @@ function introspectAccessToken(r) {
 }
 
 export default { introspectAccessToken };
+```
 
 C. Configure NGINX
 
 Save the following as celcom-digi-basic.conf under /etc/nginx/conf.d/:
 
+```
 upstream backend_service {
     server 127.0.0.1:8069;
 }
@@ -153,14 +156,20 @@ server {
         proxy_pass https://keycloak.example.com/realms/celcomdigi-realm/protocol/openid-connect/token;
     }
 }
+```
 
 3. Validation and Testing
 
     Start NGINX:
-
+```
     sudo nginx -t && sudo nginx -s reload
+```
 
     Send a Request to the /api Endpoint: Use the client’s Basic Authorization header.
+    
+![postman-token-response](https://github.com/user-attachments/assets/a20055f3-0087-4ac0-86a6-e5f88d10be4f)
+
+    
     Expected behavior:
         Request triggers a sideband call to Keycloak.
         Validated access_token and attributes are forwarded to the backend as headers prefixed with Token-.
