@@ -1,7 +1,7 @@
 # nginx-keycloak-auth
 ## NGINX Integration with Keycloak for Legacy Client Authentication
 
-# Overview
+## Overview
 This project demonstrates how to integrate NGINX with Keycloak for validating legacy clients' Basic Authentication credentials and forwarding relevant token attributes to a backend. This solution leverages NGINX JavaScript (NJS) for parsing JSON responses, enabling dynamic processing of access tokens and related attributes.
 Problem Statement
 
@@ -13,7 +13,7 @@ Legacy clients require access to APIs through NGINX, using Basic Authentication 
 
 Since JSON parsing is beyond the native capability of NGINX directives, NGINX JavaScript (NJS) is used for this purpose.
 
-Requirements
+##Requirements
 
 Software:
 - NGINX (with NGINX JavaScript module ngx_http_js_module)
@@ -25,7 +25,8 @@ Setup Components:
 - NGINX with JavaScript module enabled
 - Backend server (for validating forwarded headers)
 
-Step-by-Step Guide
+
+## Step-by-Step Guide
 
 1. Keycloak Configuration
     Access Keycloak Admin Console:
@@ -58,13 +59,15 @@ Step-by-Step Guide
 
 Expected Response:
 
+```
         {
             "access_token": "eyJhbGciOi...",
             "expires_in": 1800,
             "token_type": "Bearer"
         }
-        
+```        
 ![keycloak-configuration](https://github.com/user-attachments/assets/fa559443-de15-4074-a4aa-a341ec2046dd)
+
 
 2. NGINX Configuration
 
