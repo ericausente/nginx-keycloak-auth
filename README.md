@@ -71,7 +71,7 @@ Expected Response:
 
 
 2. NGINX Configuration
-
+```
 A. Load JavaScript Module
 
 Ensure the ngx_http_js_module is loaded. Add this to nginx.conf:
@@ -79,6 +79,7 @@ Ensure the ngx_http_js_module is loaded. Add this to nginx.conf:
 load_module modules/ngx_http_js_module.so;
 
 B. Add the NJS Script
+```
 
 Save the following script as oauth_token.js under /etc/nginx/conf.d/:
 ```
@@ -118,7 +119,9 @@ function introspectAccessToken(r) {
 export default { introspectAccessToken };
 ```
 
+
 C. Configure NGINX
+
 
 Save the following as celcom-digi-basic.conf under /etc/nginx/conf.d/:
 
@@ -169,7 +172,7 @@ server {
     sudo nginx -t && sudo nginx -s reload
 ```
 
-    Send a Request to the /api Endpoint: Use the client’s Basic Authorization header.
+Send a Request to the /api Endpoint: Use the client’s Basic Authorization header.
     
 ![postman-token-response](https://github.com/user-attachments/assets/a20055f3-0087-4ac0-86a6-e5f88d10be4f)
 
@@ -179,6 +182,8 @@ server {
         Validated access_token and attributes are forwarded to the backend as headers prefixed with Token-.
 
     Inspect Logs: Debug logs are stored in /var/log/nginx/error_jwt.log.
+    
+![Debug_logs](https://github.com/user-attachments/assets/245c095e-b862-4887-a2df-538217363ebd)
 
 
 Next Steps
