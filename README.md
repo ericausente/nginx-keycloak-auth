@@ -3,17 +3,19 @@
 
 ## Overview
 This project demonstrates how to integrate NGINX with Keycloak for validating legacy clients' Basic Authentication credentials and forwarding relevant token attributes to a backend. This solution leverages NGINX JavaScript (NJS) for parsing JSON responses, enabling dynamic processing of access tokens and related attributes.
-Problem Statement
 
-Legacy clients require access to APIs through NGINX, using Basic Authentication (Base64-encoded client-name:client-secret) for authorization. To validate these credentials:
 
+## Problem Statement
+Legacy clients require access to APIs through NGINX, using Basic Authentication (Base64-encoded client-name:client-secret) for authorization. 
+
+To validate these credentials:
 - NGINX must make a sideband request to Keycloak’s token endpoint.
 - Retrieve the JWT token and validate its content
 - Forward the access_token and other relevant attributes as headers to the backend service.
 
 Since JSON parsing is beyond the native capability of NGINX directives, NGINX JavaScript (NJS) is used for this purpose.
 
-##Requirements
+## Requirements
 
 Software:
 - NGINX (with NGINX JavaScript module ngx_http_js_module)
