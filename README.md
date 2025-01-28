@@ -29,6 +29,7 @@ Setup Components:
 ## Step-by-Step Guide
 
 1. Keycloak Configuration
+```
     Access Keycloak Admin Console:
     Navigate to the Keycloak admin console at https://keycloak.example.com (Internal Keycloak lab setup, forced to resolve to keycloak.example.com)
    
@@ -53,9 +54,9 @@ Setup Components:
         Headers:
             Content-Type: application/x-www-form-urlencoded
             Authorization: Basic <Base64-encoded-clientID:clientSecret>
-
         Body:
              grant_type=client_credentials
+```
 
 Expected Response:
 
