@@ -190,4 +190,4 @@ Send a Request to the /api Endpoint: Use the client’s Basic Authorization head
 
 Next Steps
 
-If deploying on Kubernetes Ingress, the configuration can be adapted for the ingress controller. Let me know if you'd like any refinements to the documentation!
+If deploying on Kubernetes Ingress, the configuration can be adapted for the ingress controller.
