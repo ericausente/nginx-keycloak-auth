@@ -61,14 +61,7 @@ metadata:
   annotations:
     nginx.org/location-snippets: |
       set $permission "$request_uri#$request_method";
-
       auth_request /_oauth2_token_introspection;
-
-      proxy_set_header audience "mw-resource-owner";
-      proxy_set_header permission_resource_format "uri";
-      proxy_set_header permission_resource_matching_uri "true";
-      proxy_set_header permission $permission;
-
       auth_request_set $final_auth $sent_http_token_forward;
       proxy_set_header Authorization $final_auth;
     nginx.org/server-snippets: |
@@ -84,7 +77,7 @@ metadata:
           proxy_set_header Authorization $original_auth;
           proxy_set_body "grant_type=urn:ietf:params:oauth:grant-type:uma-ticket&permission=$permission&audience=mw-resource-owner&permission_resource_format=uri&permission_resource_matching_uri=true";
           proxy_ssl_server_name on;
-          proxy_pass https://np-keycloak.dte.celcomdigi.com/realms/mw-dev-realm/protocol/openid-connect/token;
+          proxy_pass https://np-keycloak.sampleidp.com/realms/mw-dev-realm/protocol/openid-connect/token;
       }
 
       location = /_basic_send_request {
@@ -94,7 +87,7 @@ metadata:
           proxy_set_header Authorization $original_auth;
           proxy_set_body "grant_type=client_credentials";
           proxy_ssl_server_name on;
-          proxy_pass https://np-keycloak.dte.celcomdigi.com/realms/mw-dev-realm/protocol/openid-connect/token;
+          proxy_pass https://np-keycloak.sampleidp.com/realms/mw-dev-realm/protocol/openid-connect/token;
       }
 ```
 
@@ -104,17 +97,6 @@ metadata:
 
 ```js
 function introspectAccessToken(r) {
-    var authHeader = r.headersIn["Authorization"] || "";
-    var permission = r.variables.permission || "";
-
-    r.log("Authorization header: " + authHeader);
-    r.log("Permission: " + permission);
-
-    if (!permission) {
-        r.return(400, "Missing permission");
-        return;
-    }
-
     r.subrequest("/_oauth2_send_bearer_request", function(reply) {
         r.log("Bearer introspection response: " + reply.status);
         if (reply.status === 200) {
